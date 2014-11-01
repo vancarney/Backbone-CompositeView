@@ -41,3 +41,4 @@ Backbone  = unless typeof exports is 'undefined' then require 'backbone' else gl
       if typeof @init == 'function'
         if o? then @init o else @init() 
       @createChildren()
+) jQuery

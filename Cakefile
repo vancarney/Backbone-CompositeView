@@ -21,7 +21,7 @@ catch err
 # paths object for module invocation reference
 paths={
   "coffee": [
-    "lib",
+    ".",
     "src"
   ],
   "uglify": [
