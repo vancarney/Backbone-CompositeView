@@ -9,6 +9,7 @@ Backbone  = unless typeof exports is 'undefined' then require 'backbone' else gl
     collection: null
     __children: []
     __parent:   null
+    subviews:{}
     createChildren:->
       if typeof @subviews != 'undefined' and @subviews? and _.isObject @subviews
         _.each @subviews, ((view, selector)=>
@@ -41,7 +42,7 @@ Backbone  = unless typeof exports is 'undefined' then require 'backbone' else gl
       @__children[sel] || null
     addChild:(sel,clazz,opts)->
       return throw 'clazz must be type <Function>' unless typeof clazz is 'function'
-      @subviews[sel] = clazz
+      (@subviews ?= {})[sel] = clazz
       @createChildren() unless opts?.create? and opts.create == false
       @
     removeChild:(sel,opts)->

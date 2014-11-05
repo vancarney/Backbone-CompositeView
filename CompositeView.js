@@ -23,6 +23,8 @@ Backbone = typeof exports !== 'undefined' ? require('backbone') : global.Backbon
 
     CompositeView.prototype.__parent = null;
 
+    CompositeView.prototype.subviews = {};
+
     CompositeView.prototype.createChildren = function() {
       if (typeof this.subviews !== 'undefined' && (this.subviews != null) && _.isObject(this.subviews)) {
         _.each(this.subviews, ((function(_this) {
@@ -83,7 +85,7 @@ Backbone = typeof exports !== 'undefined' ? require('backbone') : global.Backbon
       if (typeof clazz !== 'function') {
         throw 'clazz must be type <Function>';
       }
-      this.subviews[sel] = clazz;
+      (this.subviews != null ? this.subviews : this.subviews = {})[sel] = clazz;
       if (!(((opts != null ? opts.create : void 0) != null) && opts.create === false)) {
         this.createChildren();
       }
