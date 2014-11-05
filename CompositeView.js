@@ -120,7 +120,7 @@ Backbone = typeof exports !== 'undefined' ? require('backbone') : global.Backbon
       _ref = _.keys(this.__children);
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         sel = _ref[_i];
-        this[sel].remove();
+        this.$(sel).remove();
         delete this[sel];
         delete this.__children[sel];
       }

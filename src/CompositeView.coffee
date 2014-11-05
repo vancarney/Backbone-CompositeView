@@ -59,7 +59,7 @@ Backbone  = unless typeof exports is 'undefined' then require 'backbone' else gl
       @
     removeAllChildren:->
       for sel in _.keys( @__children  )
-        @[sel].remove()
+        @$(sel).remove()
         delete @[sel]
         delete @__children[sel]
       @
