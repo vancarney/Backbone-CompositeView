@@ -131,6 +131,7 @@ Backbone = typeof exports !== 'undefined' ? require('backbone') : global.Backbon
     };
 
     CompositeView.prototype.initialize = function(o) {
+      _.extend(this, Backbone.Events);
       if ((o != null) && o.el) {
         this.setElement(o.el);
       }

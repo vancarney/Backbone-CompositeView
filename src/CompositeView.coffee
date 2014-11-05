@@ -66,6 +66,7 @@ Backbone  = unless typeof exports is 'undefined' then require 'backbone' else gl
     childrenComplete:->
       @
     initialize:(o)->
+      _.extend @, Backbone.Events
       @setElement o.el if o? and o.el
       @setCollection o.collection if o? and o.collection
       @__parent = o.__parent if o? and o.__parent
