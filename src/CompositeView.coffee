@@ -5,7 +5,7 @@ global = exports ? window
 _         = (unless typeof exports is 'undefined' then require 'underscore' else global)._
 Backbone  = unless typeof exports is 'undefined' then require 'backbone' else global.Backbone
 (($)->
-  class Backbone.CompositeView extends Backbone.View
+  class Backbone.CompositeView extends Backbone.View 
     collection: null
     __children: []
     __parent:   null
@@ -36,7 +36,35 @@ Backbone  = unless typeof exports is 'undefined' then require 'backbone' else gl
       @__collection
     getChildren:->
       @__children
+    getChild:(sel)->
+      return throw 'clazz must be type <Function>' unless typeof clazz is 'function'
+      @__children[sel] || null
+    addChild:(sel,clazz,opts)->
+      return throw 'clazz must be type <Function>' unless typeof clazz is 'function'
+      @subviews[sel] = clazz
+      @createChildren() unless opts?.create? and opts.create == false
+      @
+    removeChild:(sel,opts)->
+      return unless sel
+      if typeof sel is 'string'
+        if @__children[sel]?
+          @__children[sel].remove()
+          delete @__children[sel]
+      else
+        throw 'param sel must be CSS Selector String'
+      @
+    replaceChild:(sel,clazz)->
+      return throw 'param sel must be CSS Selector String' unless sel? and typeof sel is 'string'
+      @__children[sel] = clazz if typeof sel is 'string' and clazz instanceof Backbone.View
+      @
+    removeAllChildren:->
+      _.each _.keys( @__children  ), (v)=>
+        @[v].remove()
+        delete @[v]
+        delete @__children[v]
+      @
     childrenComplete:->
+      @
     initialize:(o)->
       @setElement o.el if o? and o.el
       @setCollection o.collection if o? and o.collection
