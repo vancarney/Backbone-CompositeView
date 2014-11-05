@@ -116,13 +116,14 @@ Backbone = typeof exports !== 'undefined' ? require('backbone') : global.Backbon
     };
 
     CompositeView.prototype.removeAllChildren = function() {
-      _.each(_.keys(this.__children), (function(_this) {
-        return function(v) {
-          _this[v].remove();
-          delete _this[v];
-          return delete _this.__children[v];
-        };
-      })(this));
+      var sel, _i, _len, _ref;
+      _ref = _.keys(this.__children);
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        sel = _ref[_i];
+        this[sel].remove();
+        delete this[sel];
+        delete this.__children[sel];
+      }
       return this;
     };
 
