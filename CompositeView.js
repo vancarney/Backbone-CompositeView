@@ -72,7 +72,63 @@ Backbone = typeof exports !== 'undefined' ? require('backbone') : global.Backbon
       return this.__children;
     };
 
-    CompositeView.prototype.childrenComplete = function() {};
+    CompositeView.prototype.getChild = function(sel) {
+      if (typeof clazz !== 'function') {
+        throw 'clazz must be type <Function>';
+      }
+      return this.__children[sel] || null;
+    };
+
+    CompositeView.prototype.addChild = function(sel, clazz, opts) {
+      if (typeof clazz !== 'function') {
+        throw 'clazz must be type <Function>';
+      }
+      this.subviews[sel] = clazz;
+      if (!(((opts != null ? opts.create : void 0) != null) && opts.create === false)) {
+        this.createChildren();
+      }
+      return this;
+    };
+
+    CompositeView.prototype.removeChild = function(sel, opts) {
+      if (!sel) {
+        return;
+      }
+      if (typeof sel === 'string') {
+        if (this.__children[sel] != null) {
+          this.__children[sel].remove();
+          delete this.__children[sel];
+        }
+      } else {
+        throw 'param sel must be CSS Selector String';
+      }
+      return this;
+    };
+
+    CompositeView.prototype.replaceChild = function(sel, clazz) {
+      if (!((sel != null) && typeof sel === 'string')) {
+        throw 'param sel must be CSS Selector String';
+      }
+      if (typeof sel === 'string' && clazz instanceof Backbone.View) {
+        this.__children[sel] = clazz;
+      }
+      return this;
+    };
+
+    CompositeView.prototype.removeAllChildren = function() {
+      _.each(_.keys(this.__children), (function(_this) {
+        return function(v) {
+          _this[v].remove();
+          delete _this[v];
+          return delete _this.__children[v];
+        };
+      })(this));
+      return this;
+    };
+
+    CompositeView.prototype.childrenComplete = function() {
+      return this;
+    };
 
     CompositeView.prototype.initialize = function(o) {
       if ((o != null) && o.el) {
